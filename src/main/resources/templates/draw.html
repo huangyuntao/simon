@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>画图</title>
+		<link rel="icon" th:href="@{/img/24735430.jpg}" sizes="32x32">
+		<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js" ></script>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="500" height="500" style="border:2px solid #C6C6C6;margin-left:350px;">
+		</canvas>
+	</body>
+	<script>
+		var c=$("#myCanvas")[0];
+		var cxt=c.getContext("2d"); 
+		cxt.moveTo(10,10);
+		 c.onmousedown=function(e){
+            e=e||window.event;
+            var ox=e.clientX-c.offsetLeft;
+            var oy=e.clientY-c.offsetTop;
+            cxt.moveTo(ox,oy);
+            document.onmousemove=function(e){
+                var ox1=e.clientX-c.offsetLeft;
+                var oy1=e.clientY-c.offsetTop;
+                cxt.lineTo(ox1,oy1);
+                cxt.stroke();
+                cxt.strokeStyle='red';
+            }
+            document.onmouseup=function(){
+                document.onmousemove=document.onmouseup=null;
+            }
+        }
+	</script>
+</html>

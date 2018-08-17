@@ -62,9 +62,9 @@
 		cxt.strokeStyle = color;
 		cxt.stroke();
 	}
-	function clearArea() {//清除
-		cxt.setTransform(1, 0, 0, 1, 0, 0);
-		cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height);
+	function clearArea() {//重置画布
+		$(c).attr('width', $(c).width());
+		$(c).attr('height', $(c).height());
 	}
 </script>
 </html>

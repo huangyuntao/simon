@@ -1,35 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>画图</title>
-		<link rel="icon" th:href="@{/img/24735430.jpg}" sizes="32x32">
-		<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js" ></script>
-	</head>
-	<body>
-		<canvas id="myCanvas" width="500" height="500" style="border:2px solid #C6C6C6;margin-left:350px;">
+<head>
+<meta charset="UTF-8">
+<title>画图</title>
+<link rel="icon" th:href="@{/img/24735430.jpg}" sizes="32x32">
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+	
+	<canvas id="myCanvas" width="500" height="500"
+		style="border: 2px solid #C6C6C6; margin-left: 350px;">
 		</canvas>
-	</body>
-	<script>
-		var c=$("#myCanvas")[0];
-		var cxt=c.getContext("2d"); 
-		cxt.moveTo(10,10);
-		 c.onmousedown=function(e){
-            e=e||window.event;
-            var ox=e.clientX-c.offsetLeft;
-            var oy=e.clientY-c.offsetTop;
-            cxt.moveTo(ox,oy);
-            document.onmousemove=function(e){
-                var ox1=e.clientX-c.offsetLeft;
-                var oy1=e.clientY-c.offsetTop;
-                cxt.lineTo(ox1,oy1);
-                cxt.stroke();
-                cxt.strokeStyle='red';
-            }
-            document.onmouseup=function(){
-                document.onmousemove=document.onmouseup=null;
-            }
-        }
-	</script>
+		<button onclick="clearArea();">清除</button>
+</body>
+<script>
+	/*绘画操作
+	 1.鼠标点击或触摸  触发落点设置
+	 2.鼠标移动或触摸移动,进行划线操作
+	 3.鼠标离开  取消鼠标移动或触摸移动事件，
+	 * */
+	var c = $("#myCanvas")[0];//canvas对象
+	var cxt = c.getContext("2d"); //画图对象
+	var color = 'red';//颜色
+	var lineWidth = 3;//线宽
+	var downX = 0;//落点X
+	var downY = 0;//落点Y
+	c.onmousedown = function(e) {//鼠标触发绘画事件
+		e = e || window.event;
+		var ox = e.clientX - c.offsetLeft;
+		var oy = e.clientY - c.offsetTop;
+		cxt.moveTo(ox, oy);
+		Draw(ox + 1, oy + 1);
+		c.onmousemove = function(e) {
+			Draw(e.clientX - c.offsetLeft, e.clientY - c.offsetTop);
+		}
+		c.onmouseup = function() {
+			c.onmousemove = c.onmouseup = null;
+		}
+	}
+
+	c.ontouchstart = function(e) {//触摸触发绘画事件
+		e = e || window.event;
+		var touch = e.targetTouches[0];
+		var ox = touch.clientX - c.offsetLeft;
+		var oy = touch.clientY - c.offsetTop;
+		cxt.moveTo(ox, oy);
+		Draw(ox + 1, oy + 1);
+		c.ontouchmove = function(e) {
+			e.preventDefault();//取消默认事件
+			var touch = e.targetTouches[0];
+			Draw(touch.clientX - c.offsetLeft, touch.clientY - c.offsetTop);
+		}
+		c.ontouchend = function(e) {
+			c.ontouchmove = c.ontouchend = null;
+		}
+	}
+	function Draw(ox1, oy1) {
+		cxt.lineTo(ox1, oy1);
+		cxt.lineWidth = lineWidth;
+		cxt.strokeStyle = color;
+		cxt.stroke();
+	}
+	function clearArea() {//清除
+		cxt.setTransform(1, 0, 0, 1, 0, 0);
+		cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height);
+	}
+</script>
 </html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>画图</title>
+<link rel="icon" th:href="@{/img/24735430.jpg}" sizes="32x32">
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+</head>
+<script type="text/javascript">
+	var context = [[@{/}]];
+	var socket;
+	if (typeof (WebSocket) == "undefined") {
+		console.log("您的浏览器不支持WebSocket");
+	} else {
+		console.log("您的浏览器支持WebSocket");
+	}
+		socket = new WebSocket("ws://localhost:8100/"+context+"/websocket/123456");
+		//打开事件
+		socket.onopen = function() {
+			console.log("Socket 已打开");
+		};
+		//获得消息事件
+		socket.onmessage = function(msg) {
+			console.log(msg.data);
+		};
+		//关闭事件
+		socket.onclose = function() {
+			console.log("Socket已关闭");
+		};
+		//发生了错误事件
+		socket.onerror = function() {
+			alert("Socket发生了错误");
+		};
+	
+		$(window).unload(function() {
+			socket.close();
+		});
+</script>
+<body>
+</body>
+</html>

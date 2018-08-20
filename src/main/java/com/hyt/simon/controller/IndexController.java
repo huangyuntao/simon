@@ -18,4 +18,8 @@ public class IndexController {
 		return "ok";
 	}
 	
+	@RequestMapping("/webSocket/test")
+    public String  test() {
+        return "webSocket/test";
+    }
 }

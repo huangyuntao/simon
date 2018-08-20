@@ -9,6 +9,9 @@ import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 public class Base64ImgConvertUtil   
 {  
+	public static void main(String[] args) {
+		System.out.println(GetImageStr("d:\\a.jpg"));
+	}
     //图片转化成base64字符串  
     public static String GetImageStr(String imgFile)  
     {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理  

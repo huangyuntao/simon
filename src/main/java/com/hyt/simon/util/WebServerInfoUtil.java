@@ -7,11 +7,12 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * 获取web服务器相关信息
  */
-@Configuration
+@Component
 public class WebServerInfoUtil implements ApplicationListener<WebServerInitializedEvent>  {
     private static WebServerInitializedEvent event;
     

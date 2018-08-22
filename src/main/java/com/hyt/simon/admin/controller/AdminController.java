@@ -18,7 +18,7 @@ public class AdminController {
 	public String  welcome(Model model) {
 		model.addAttribute("hostName", WebServerInfoUtil.getHostName());
 		model.addAttribute("hostAddress", WebServerInfoUtil.getHostAddress());
-		model.addAttribute("port", WebServerInfoUtil.getPort());
+//		model.addAttribute("port", WebServerInfoUtil.getPort());
 		return "admin/welcome";
 	}
 }
